@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-dark custom-navbar">
+    <!-- Left side: Logo + Brand -->
+    <div class="navbar-left d-flex align-items-center gap-2">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Logo" class="logo" />
+      <span class="navbar-brand mb-0 h1">Crime Mapping</span>
+    </div>
+    <!-- Right side: Navigation Links -->
+    <div class="nav-links">
+      <a href="{{ url_for('main.dashboard') }}"><i class='bx bx-home'></i> Home</a>
+      <a href="#"><i class='bx bx-map'></i> Crime Mapping</a>
+      <a href="#"><i class='bx bx-bar-chart'></i> Analytics</a>
+      <a href="{{ url_for('barangay.list_barangays') }}"><i class='bx bx-group'></i> Barangays</a>
+      <a href="{{ url_for('audit_logs.view_audit_logs') }}"><i class='bx bx-history'></i> Audit Logs</a>
+      <a href="{{ url_for('auth.create_user') }}"><i class='bx bx-user-plus'></i> Create User</a>
+      <a href="{{ url_for('auth.profile') }}"><i class='bx bx-user'></i> Profile</a>
+      <a href="{{ url_for('auth.logout') }}"><i class='bx bx-log-out'></i> Logout</a>
+      <span class="nav-spacer"></span>
+    </div>
+  </nav>
+
+  <header>
+    <div class="logo-left">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="City Police Station Logo">
+    </div>
+    <div class="titles">
+      <h1>CITY POLICE STATION</h1>
+      <h2>P.A.T.R.O.L. Plan 2030 Roadmap</h2>
+      <h3>Peace and Order Agenda for Transformation and Upholding of the Rule-Of-Law</h3>
+    </div>
+    <div class="logo-right">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Police Logo Philippines">
+    </div>
+  </header>
+
+  <main>
+    <section class="mandate-vision">
+      <div class="mandate">
+        <h4>MANDATE</h4>
+        <p>Republic Act 6975 as amended by RA 8551 and further amended by RA 9708</p>
+      </div>
+      <div class="vision">
+        <h4>VISION</h4>
+        <p><strong>Imploring the aid of the Almighty, by 2030,</strong> We shall be a highly capable, effective and credible police service working in partnership with a responsive community towards the attainment of a safer place to live, work, and do business.</p>
+      </div>
+    </section>
+
+    <section class="mission-philosophy">
+      <div class="mission">
+        <h4>MISSION</h4>
+        <p>Enforce the law, prevent and control crimes, maintain peace and order, and ensure public safety and internal security with the active support of the community.</p>
+      </div>
+      <div class="philosophy">
+        <h4>PHILOSOPHY</h4>
+        <p>Service, Honor, and Justice</p>
+      </div>
+    </section>
+
+    <section class="core-values">
+      <h4>CORE VALUES</h4>
+      <ul>
+        <li>Maka-Diyos (Pro-God)</li>
+        <li>Makabayan (Pro-Country)</li>
+        <li>Makatao (Pro-People)</li>
+        <li>Makakalikasan (Pro-Environment)</li>
+      </ul>
+    </section>
+
+    <section class="goals">
+      <h4>HIGHLY CAPABLE, EFFECTIVE, AND CREDIBLE POLICE SERVICE BY 2030</h4>
+      <div class="layer community">
+        <div class="title">COMMUNITY</div>
+        <div class="subtitle">A Safer Place to Live, Work, and do Business</div>
+      </div>
+      <div class="layer process-excellence">
+        <div class="layer-title">PROCESS EXCELLENCE</div>
+        <div class="goals-grid red">
+          <div class="goal">Improve Crime Prevention</div>
+          <div class="goal">Improve Crime Solution</div>
+          <div class="goal">Improve Human Rights-based, Community and Service-oriented Policing</div>
+          <div class="goal">Improve Support to Public Safety and Internal Security</div>
+        </div>
+      </div>
+      <div class="layer learning-growth">
+        <div class="layer-title">LEARNING AND GROWTH</div>
+        <div class="goals-grid green">
+          <div class="goal">Recruit Quality Applicants</div>
+          <div class="goal">Develop Competent, Motivated, Values-oriented and Disciplined PNP Personnel</div>
+          <div class="goal">Develop a Responsive and Highly Professional Police Organization</div>
+        </div>
+      </div>
+      <div class="layer resource-management">
+        <div class="layer-title">RESOURCE MANAGEMENT</div>
+        <div class="goals-grid yellow">
+          <div class="goal">Optimize Use of Financial and Logistical Resources</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 City Police Station</p>
+  </footer>
+</body>
+</html> 

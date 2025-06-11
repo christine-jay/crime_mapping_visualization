@@ -1,0 +1,8 @@
+Flask
+Flask-Login
+Flask-Mail
+mysql-connector-python
+pandas
+openpyxl
+Werkzeug
+Flask-Bootstrap 

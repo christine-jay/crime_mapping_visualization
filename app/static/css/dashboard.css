@@ -1,0 +1,199 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: white;
+    color: darkblue;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .logo img {
+    height: 100px;
+}
+
+.titles {
+    text-align: center;
+    padding-right: 100px;
+    flex: 1;
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: bold;
+}
+
+nav.navbar {
+    background-color: #002D72;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between logo and CrimeMapping text */
+}
+
+.logo {
+    height: 32px; /* Adjust size as needed */
+    width: auto;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-spacer {
+    width: 20px; /* Adds space after Logout */
+}
+
+.logo-left img,
+.logo-right img {
+    height: 80px;         /* Reduce the height */
+    max-width: 100px;     /* Optional: limit width */
+    object-fit: contain;  /* Keeps aspect ratio without distortion */
+}
+
+main {
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+main h4 {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+section {
+    background-color: white;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.goals {
+    background-color: #fff;
+    border: 2px solid #2E6DA4;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.mandate-vision, .mission-philosophy {
+    display: flex;
+    gap: 20px;
+}
+
+.mandate, .vision, .mission, .philosophy {
+    flex: 1;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.mandate h4, .vision h4, .mission h4, .philosophy h4 {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px;
+    margin: 0;
+}
+
+.mandate p, .vision p, .mission p, .philosophy p {
+    margin-top: 10px;
+}
+
+.layer {
+    margin-bottom: 30px;
+}
+
+.layer .title {
+    background-color: #0C4DA2;
+    color: white;
+    font-size: 22px;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.layer .subtitle {
+    background-color: #2C72BA;
+    color: white;
+    font-size: 16px;
+    padding: 8px;
+    margin-top: -10px;
+}
+
+.layer-title {
+    background-color: #444;
+    color: white;
+    padding: 8px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.goals-grid {
+    display: grid;
+    gap: 10px;
+    padding: 0 10px;
+}
+
+.goals-grid.red {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.goals-grid.green {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.goals-grid.yellow {
+    grid-template-columns: 1fr;
+}
+
+.goal {
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.goals-grid.red .goal {
+    background-color: #C62828;
+}
+
+.goals-grid.green .goal {
+    background-color: #2E7D32;
+}
+
+.goals-grid.yellow .goal {
+    background-color: #F9A825;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #002D72;
+    color: white;
+}
