@@ -1,0 +1,99 @@
+2025-06-12 09:14:38,710 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:14:52,177 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:14:56,312 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:15:24,622 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:64]
+2025-06-12 09:15:24,623 INFO: Generated OTP: 468036, Expiry: 1749691224 [in C:\crime_mapping_visualization 0\app\routes\auth.py:67]
+2025-06-12 09:15:24,626 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:69]
+2025-06-12 09:15:24,631 INFO: Updating OTP for user_id: 2 [in C:\crime_mapping_visualization 0\app\routes\auth.py:73]
+2025-06-12 09:15:24,632 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('468036', 1749691224, 2) [in C:\crime_mapping_visualization 0\app\routes\auth.py:76]
+2025-06-12 09:15:24,637 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:79]
+2025-06-12 09:15:24,642 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:82]
+2025-06-12 09:15:24,643 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:86]
+2025-06-12 09:15:24,644 INFO: OTP generation successful for user admin [in C:\crime_mapping_visualization 0\app\routes\auth.py:89]
+2025-06-12 09:15:29,035 INFO: OTP email sent to muyahooo1992@gmail.com [in C:\crime_mapping_visualization 0\app\routes\auth.py:99]
+2025-06-12 09:15:59,600 INFO: Accessing audit logs route [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:14]
+2025-06-12 09:15:59,601 INFO: Page requested: 1 [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:19]
+2025-06-12 09:15:59,602 INFO: Attempting to connect to database [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:26]
+2025-06-12 09:15:59,619 ERROR: Unexpected error in audit logs: module 'mysql' has no attribute 'connection'
+Traceback (most recent call last):
+  File "C:\crime_mapping_visualization 0\app\routes\audit_logs.py", line 27, in view_audit_logs
+    cur = mysql.connection.cursor()
+          ^^^^^^^^^^^^^^^^
+AttributeError: module 'mysql' has no attribute 'connection'. Did you mean: 'connector'?
+ [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:88]
+2025-06-12 09:16:12,877 INFO: Accessing audit logs route [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:14]
+2025-06-12 09:16:12,878 INFO: Page requested: 1 [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:19]
+2025-06-12 09:16:12,879 INFO: Attempting to connect to database [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:26]
+2025-06-12 09:16:12,881 ERROR: Unexpected error in audit logs: module 'mysql' has no attribute 'connection'
+Traceback (most recent call last):
+  File "C:\crime_mapping_visualization 0\app\routes\audit_logs.py", line 27, in view_audit_logs
+    cur = mysql.connection.cursor()
+          ^^^^^^^^^^^^^^^^
+AttributeError: module 'mysql' has no attribute 'connection'. Did you mean: 'connector'?
+ [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:88]
+2025-06-12 09:17:09,039 INFO: Accessing audit logs route [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:14]
+2025-06-12 09:17:09,042 INFO: Page requested: 1 [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:19]
+2025-06-12 09:17:09,042 INFO: Attempting to connect to database [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:26]
+2025-06-12 09:17:09,050 ERROR: Unexpected error in audit logs: module 'mysql' has no attribute 'connection'
+Traceback (most recent call last):
+  File "C:\crime_mapping_visualization 0\app\routes\audit_logs.py", line 27, in view_audit_logs
+    cur = mysql.connection.cursor()
+          ^^^^^^^^^^^^^^^^
+AttributeError: module 'mysql' has no attribute 'connection'. Did you mean: 'connector'?
+ [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:88]
+2025-06-12 09:24:47,333 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:25:53,620 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:26:10,768 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:26:55,074 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:27:22,619 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:64]
+2025-06-12 09:27:22,619 INFO: Generated OTP: 659480, Expiry: 1749691942 [in C:\crime_mapping_visualization 0\app\routes\auth.py:67]
+2025-06-12 09:27:22,620 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:69]
+2025-06-12 09:27:22,622 INFO: Updating OTP for user_id: 2 [in C:\crime_mapping_visualization 0\app\routes\auth.py:73]
+2025-06-12 09:27:22,623 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('659480', 1749691942, 2) [in C:\crime_mapping_visualization 0\app\routes\auth.py:76]
+2025-06-12 09:27:22,632 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:79]
+2025-06-12 09:27:22,636 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:82]
+2025-06-12 09:27:22,637 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:86]
+2025-06-12 09:27:22,637 INFO: OTP generation successful for user admin [in C:\crime_mapping_visualization 0\app\routes\auth.py:89]
+2025-06-12 09:27:27,184 INFO: OTP email sent to muyahooo1992@gmail.com [in C:\crime_mapping_visualization 0\app\routes\auth.py:99]
+2025-06-12 09:29:01,346 ERROR: Error in view_audit_logs: module 'mysql' has no attribute 'connection'
+Traceback (most recent call last):
+  File "C:\crime_mapping_visualization 0\app\routes\audit_logs.py", line 102, in view_audit_logs
+    cur = mysql.connection.cursor()
+          ^^^^^^^^^^^^^^^^
+AttributeError: module 'mysql' has no attribute 'connection'. Did you mean: 'connector'?
+ [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:155]
+2025-06-12 09:29:49,362 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:30:07,354 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:64]
+2025-06-12 09:30:07,355 INFO: Generated OTP: 742377, Expiry: 1749692107 [in C:\crime_mapping_visualization 0\app\routes\auth.py:67]
+2025-06-12 09:30:07,355 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:69]
+2025-06-12 09:30:07,358 INFO: Updating OTP for user_id: 2 [in C:\crime_mapping_visualization 0\app\routes\auth.py:73]
+2025-06-12 09:30:07,359 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('742377', 1749692107, 2) [in C:\crime_mapping_visualization 0\app\routes\auth.py:76]
+2025-06-12 09:30:07,368 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:79]
+2025-06-12 09:30:07,371 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:82]
+2025-06-12 09:30:07,372 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:86]
+2025-06-12 09:30:07,373 INFO: OTP generation successful for user admin [in C:\crime_mapping_visualization 0\app\routes\auth.py:89]
+2025-06-12 09:30:11,782 INFO: OTP email sent to muyahooo1992@gmail.com [in C:\crime_mapping_visualization 0\app\routes\auth.py:99]
+2025-06-12 09:30:35,566 ERROR: Error in view_audit_logs: 1054 (42S22): Unknown column 'al.id' in 'field list'
+Traceback (most recent call last):
+  File "C:\crime_mapping_visualization 0\app\routes\audit_logs.py", line 116, in view_audit_logs
+    cur.execute(count_query, params)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\cursor.py", line 748, in execute
+    self._handle_result(self._connection.cmd_query(stmt))
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\opentelemetry\context_propagation.py", line 74, in wrapper
+    return method(cnx, *args, **kwargs)
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection.py", line 855, in cmd_query
+    result = self._handle_result(self._send_cmd(ServerCmd.QUERY, query))
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection.py", line 631, in _handle_result
+    raise get_exception(packet)
+mysql.connector.errors.ProgrammingError: 1054 (42S22): Unknown column 'al.id' in 'field list'
+ [in C:\crime_mapping_visualization 0\app\routes\audit_logs.py:168]
+2025-06-12 09:33:01,007 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:24]
+2025-06-12 09:33:28,219 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:64]
+2025-06-12 09:33:28,220 INFO: Generated OTP: 728552, Expiry: 1749692308 [in C:\crime_mapping_visualization 0\app\routes\auth.py:67]
+2025-06-12 09:33:28,221 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:69]
+2025-06-12 09:33:28,225 INFO: Updating OTP for user_id: 2 [in C:\crime_mapping_visualization 0\app\routes\auth.py:73]
+2025-06-12 09:33:28,226 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('728552', 1749692308, 2) [in C:\crime_mapping_visualization 0\app\routes\auth.py:76]
+2025-06-12 09:33:28,229 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:79]
+2025-06-12 09:33:28,232 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:82]

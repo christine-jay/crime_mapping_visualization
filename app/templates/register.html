@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .create-user-container {
-            max-width: 800px;
+            max-width: 960px;
             margin: 2rem auto;
             padding: 2rem;
             background: white;
@@ -37,22 +37,53 @@
         }
         
         .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
         }
         
         .btn-create {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #0d6efd;
             border: none;
             padding: 0.75rem 2rem;
             font-weight: 600;
             border-radius: 25px;
             transition: all 0.3s ease;
+            color: white;
         }
         
         .btn-create:hover {
+            background-color: #0b5ed7;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4);
+        }
+
+        .profile-picture-section {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .profile-picture-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            overflow: hidden;
+            border: 3px solid #dee2e6;
+        }
+
+        .profile-picture-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-picture-preview .icon {
+            font-size: 3rem;
+            color: #adb5bd;
         }
     </style>
 </head>
@@ -65,14 +96,15 @@
         </div>
         <div class="nav-links">
             <a href="{{ url_for('main.dashboard') }}"><i class='bx bx-home'></i> Home</a>
-            <a href="#"><i class='bx bx-map'></i> Crime Mapping</a>
-            <a href="#"><i class='bx bx-bar-chart'></i> Analytics</a>
+            <a href="{{ url_for('main.crime_map') }}"><i class='bx bx-map'></i> Crime Mapping</a>
+            <a href="{{ url_for('main.analytics') }}"><i class='bx bx-bar-chart'></i> Analytics</a>
             <a href="{{ url_for('barangay.list_barangays') }}"><i class='bx bx-group'></i> Barangays</a>
-            <a href="#"><i class='bx bx-history'></i> Audit Logs</a>
+            <a href="{{ url_for('audit_logs.view_audit_logs') }}"><i class='bx bx-history'></i> Audit Logs</a>
+            <a href="{{ url_for('auth.create_user') }}"><i class='bx bx-user-plus'></i> Create User</a>
             <a href="{{ url_for('auth.profile') }}"><i class='bx bx-user'></i> Profile</a>
             <a href="{{ url_for('auth.logout') }}"><i class='bx bx-log-out'></i> Logout</a>
             <span class="nav-spacer"></span>
-        </div>
+          </div>
     </nav>
 
     <div class="container">
@@ -93,7 +125,14 @@
                 {% endif %}
             {% endwith %}
 
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="profile-picture-section">
+                    <div class="profile-picture-preview" id="picturePreview">
+                        <i class='bx bx-user icon'></i>
+                    </div>
+                    <label for="profile_picture" class="btn btn-sm btn-outline-primary">Upload Picture</label>
+                    <input type="file" id="profile_picture" name="profile_picture" accept="image/*" style="display: none;">
+                </div>
                 <div class="form-section">
                     <h5><i class='bx bx-user-circle'></i> User Information</h5>
                     <div class="row">
@@ -139,8 +178,38 @@
         </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+          const links = document.querySelectorAll('.nav-links a');
+          const currentPath = window.location.pathname;
+    
+          links.forEach(link => {
+            const linkPath = new URL(link.href).pathname;
+            if (linkPath === currentPath) {
+              link.classList.add('active');
+            }
+          });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Profile picture preview
+        const profilePictureInput = document.getElementById('profile_picture');
+        const picturePreview = document.getElementById('picturePreview');
+
+        profilePictureInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    picturePreview.innerHTML = `<img src="${e.target.result}" alt="Profile Preview">`;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                picturePreview.innerHTML = `<i class='bx bx-user icon'></i>`;
+            }
+        });
+
         // Password validation
         document.getElementById('password').addEventListener('input', function() {
             const password = this.value;

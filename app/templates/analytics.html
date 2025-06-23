@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-dark custom-navbar">
+    <div class="navbar-left d-flex align-items-center gap-2">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Logo" class="logo" />
+      <span class="navbar-brand mb-0 h1">Crime Mapping</span>
+    </div>
+    <div class="nav-links">
+      <a href="{{ url_for('main.dashboard') }}"><i class='bx bx-home'></i> Home</a>
+      <a href="{{ url_for('main.crime_map') }}"><i class='bx bx-map'></i> Crime Mapping</a>
+      <a href="{{ url_for('main.analytics') }}"><i class='bx bx-bar-chart'></i> Analytics</a>
+      <a href="{{ url_for('barangay.list_barangays') }}"><i class='bx bx-group'></i> Barangays</a>
+      <a href="{{ url_for('audit_logs.view_audit_logs') }}"><i class='bx bx-history'></i> Audit Logs</a>
+      <a href="{{ url_for('auth.create_user') }}"><i class='bx bx-user-plus'></i> Create User</a>
+      <a href="{{ url_for('auth.profile') }}"><i class='bx bx-user'></i> Profile</a>
+      <a href="{{ url_for('auth.logout') }}"><i class='bx bx-log-out'></i> Logout</a>
+      <span class="nav-spacer"></span>
+    </div>
+  </nav>
+
+  <header>
+    <div class="logo-left">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="City Police Station Logo">
+    </div>
+    <div class="titles">
+      <h1>CITY POLICE STATION</h1>
+      <h2>P.A.T.R.O.L. Plan 2030 Roadmap</h2>
+      <h3>Peace and Order Agenda for Transformation and Upholding of the Rule-Of-Law</h3>
+    </div>
+    <div class="logo-right">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Police Logo Philippines">
+    </div>
+  </header>
+
+  <main>
+    <section class="crime-analytics-section">
+      <h2>Crime Analytics</h2>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h4 class="card-title">Crime Trends Overview</h4>
+          <canvas id="crimeTrendsChart" height="100"></canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">More Analytics Coming Soon</h4>
+          <p>Additional charts and insights will be displayed here.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 City Police Station</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const links = document.querySelectorAll('.nav-links a');
+      const currentPath = window.location.pathname;
+      links.forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        if (linkPath === currentPath) {
+          link.classList.add('active');
+        }
+      });
+      // Chart.js example
+      const ctx = document.getElementById('crimeTrendsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+          datasets: [{
+            label: 'Reported Crimes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'top' },
+            title: { display: true, text: 'Crime Reports Over Time' }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html> 

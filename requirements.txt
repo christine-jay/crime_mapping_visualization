@@ -1,6 +1,7 @@
 Flask
 Flask-Login
 Flask-Mail
+Flask-CORS
 mysql-connector-python
 pandas
 openpyxl

@@ -1,13 +1,14 @@
 # These are plain Python classes for structure and utility, not ORM models.
 
 class User:
-    def __init__(self, user_id, name, username, password, role, user_email):
+    def __init__(self, user_id, name, username, password, role, user_email, profile_picture=None):
         self.user_id = user_id
         self.name = name
         self.username = username
         self.password = password
         self.role = role
         self.user_email = user_email
+        self.profile_picture = profile_picture
 
     @property
     def is_authenticated(self):

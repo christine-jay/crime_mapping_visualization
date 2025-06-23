@@ -1,13 +1,28 @@
 from flask import Flask
 from flask_mail import Mail
 from flask_login import LoginManager
+from flask_cors import CORS
 import mysql.connector
 import os
+import logging
+from logging.handlers import RotatingFileHandler
 from config import Config
 
 # Initialize extensions
 mail = Mail()
 login_manager = LoginManager()
+
+def setup_logging(app):
+    if not os.path.exists('logs'):
+        os.mkdir('logs')
+    file_handler = RotatingFileHandler('logs/app.log', maxBytes=10240, backupCount=10)
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+    ))
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info('Application startup')
 
 def create_database():
     try:
@@ -93,16 +108,6 @@ CREATE TABLE IF NOT EXISTS barangay (
 )
 """)
         
-        cursor.execute("""
-CREATE TABLE IF NOT EXISTS audit_logs (
-  log_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  action VARCHAR(255) NOT NULL,
-  table_affected VARCHAR(255) NOT NULL,
-  timestamp TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES user(user_id)
-)
-""")
         # Create password_reset table if not exists
         cursor.execute("""
 CREATE TABLE IF NOT EXISTS password_reset (
@@ -115,6 +120,25 @@ CREATE TABLE IF NOT EXISTS password_reset (
   FOREIGN KEY (user_id) REFERENCES user(user_id)
 )
 """)
+
+        # Create audit_logs table with improved structure
+        cursor.execute("""
+CREATE TABLE IF NOT EXISTS audit_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    action_type ENUM('CREATE', 'UPDATE', 'DELETE', 'LOGIN', 'LOGOUT', 'OTHER') NOT NULL,
+    module VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
+    INDEX idx_created_at (created_at),
+    INDEX idx_user_id (user_id),
+    INDEX idx_action_type (action_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+""")
+
         conn.commit()
         cursor.close()
         conn.close()
@@ -126,6 +150,12 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
     app.secret_key = os.urandom(24)  # Generate a secure random secret key
+
+    # Setup CORS for React frontend
+    CORS(app, origins=['http://localhost:3000'], supports_credentials=True)
+
+    # Setup logging
+    setup_logging(app)
 
     # Create database and tables
     create_database()
@@ -176,6 +206,8 @@ def create_app():
                     self.is_anonymous = False
                     self.role = user_data['role']
                     self.username = user_data['username']
+                    self.email = user_data['user_email']
+                    self.name = user_data['name']
                 
                 def get_id(self):
                     return str(self.id)

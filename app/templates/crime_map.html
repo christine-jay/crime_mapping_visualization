@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Map</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/babel@standalone/babel.min.js"></script>
+    
+    <!-- Leaflet for maps -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    
+    <!-- Axios for API calls -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+</head>
+<body>
+  <nav class="navbar navbar-dark custom-navbar">
+    <!-- Left side: Logo + Brand -->
+    <div class="navbar-left d-flex align-items-center gap-2">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Logo" class="logo" />
+      <span class="navbar-brand mb-0 h1">Crime Mapping</span>
+    </div>
+    <!-- Right side: Navigation Links -->
+    <div class="nav-links">
+      <a href="{{ url_for('main.dashboard') }}"><i class='bx bx-home'></i> Home</a>
+      <a href="{{ url_for('main.crime_map') }}"><i class='bx bx-map'></i> Crime Mapping</a>
+      <a href="{{ url_for('main.analytics') }}"><i class='bx bx-bar-chart'></i> Analytics</a>
+      <a href="{{ url_for('barangay.list_barangays') }}"><i class='bx bx-group'></i> Barangays</a>
+      <a href="{{ url_for('audit_logs.view_audit_logs') }}"><i class='bx bx-history'></i> Audit Logs</a>
+      <a href="{{ url_for('auth.create_user') }}"><i class='bx bx-user-plus'></i> Create User</a>
+      <a href="{{ url_for('auth.profile') }}"><i class='bx bx-user'></i> Profile</a>
+      <a href="{{ url_for('auth.logout') }}"><i class='bx bx-log-out'></i> Logout</a>
+      <span class="nav-spacer"></span>
+    </div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="card-header">
+          <h5>Crime Map Filters</h5>
+        </div>
+        <div class="card-body">
+          <div id="map-filters"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h5>Interactive Crime Map</h5>
+        </div>
+        <div class="card-body">
+          <div id="crime-map" style="height: 600px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const links = document.querySelectorAll('.nav-links a');
+      const currentPath = window.location.pathname;
+
+      links.forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        if (linkPath === currentPath) {
+          link.classList.add('active');
+        }
+      });
+    });
+</script>
+
+<script type="text/babel">
+  // Crime Map Component
+  const CrimeMap = () => {
+    const [crimes, setCrimes] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const [filters, setFilters] = React.useState({
+      crimeType: '',
+      barangay: '',
+      dateRange: ''
+    });
+    const [map, setMap] = React.useState(null);
+
+    React.useEffect(() => {
+      fetchCrimes();
+      initializeMap();
+    }, []);
+
+    const fetchCrimes = async () => {
+      try {
+        const response = await axios.get('/api/crimes');
+        setCrimes(response.data);
+      } catch (error) {
+        console.error('Error fetching crimes:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    const initializeMap = () => {
+      // Initialize Leaflet map
+      const mapInstance = L.map('crime-map').setView([14.5995, 120.9842], 13);
+      
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(mapInstance);
+
+      setMap(mapInstance);
+    };
+
+    const addMarkersToMap = (crimeData) => {
+      if (!map) return;
+
+      // Clear existing markers
+      map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
+      // Add new markers
+      crimeData.forEach((crime) => {
+        // For demo purposes, generate random coordinates if not available
+        const lat = crime.latitude || (14.5995 + (Math.random() - 0.5) * 0.01);
+        const lng = crime.longitude || (120.9842 + (Math.random() - 0.5) * 0.01);
+
+        const marker = L.marker([lat, lng]).addTo(map);
+        
+        const popupContent = `
+          <div>
+            <h6>${crime.type_of_crime}</h6>
+            <p><strong>Offense:</strong> ${crime.offense}</p>
+            <p><strong>Barangay:</strong> ${crime.barangay_name}</p>
+            <p><strong>Date:</strong> ${crime.date_reported}</p>
+            <p><strong>Victim:</strong> ${crime.victim}</p>
+            <p><strong>Status:</strong> ${crime.status}</p>
+          </div>
+        `;
+        
+        marker.bindPopup(popupContent);
+      });
+    };
+
+    React.useEffect(() => {
+      if (crimes.length > 0 && map) {
+        addMarkersToMap(crimes);
+      }
+    }, [crimes, map]);
+
+    const handleFilterChange = (e) => {
+      const newFilters = {
+        ...filters,
+        [e.target.name]: e.target.value
+      };
+      setFilters(newFilters);
+    };
+
+    const filteredCrimes = crimes.filter(crime => {
+      if (filters.crimeType && crime.type_of_crime !== filters.crimeType) return false;
+      if (filters.barangay && crime.barangay_name !== filters.barangay) return false;
+      return true;
+    });
+
+    React.useEffect(() => {
+      if (map) {
+        addMarkersToMap(filteredCrimes);
+      }
+    }, [filters, map]);
+
+    if (loading) {
+      return <div>Loading crime map...</div>;
+    }
+
+    return (
+      <div className="map-filters">
+        <div className="mb-3">
+          <label className="form-label">Crime Type</label>
+          <select
+            className="form-select"
+            name="crimeType"
+            value={filters.crimeType}
+            onChange={handleFilterChange}
+          >
+            <option value="">All Types</option>
+            <option value="Theft">Theft</option>
+            <option value="Assault">Assault</option>
+            <option value="Drugs">Drugs</option>
+            <option value="Fraud">Fraud</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div className="mb-3">
+          <label className="form-label">Barangay</label>
+          <select
+            className="form-select"
+            name="barangay"
+            value={filters.barangay}
+            onChange={handleFilterChange}
+          >
+            <option value="">All Barangays</option>
+            {Array.from(new Set(crimes.map(c => c.barangay_name))).map(barangay => (
+              <option key={barangay} value={barangay}>{barangay}</option>
+            ))}
+          </select>
+        </div>
+        
+        <button 
+          className="btn btn-outline-secondary w-100"
+          onClick={() => setFilters({ crimeType: '', barangay: '', dateRange: '' })}
+        >
+          Clear Filters
+        </button>
+        
+        <div className="mt-3">
+          <small className="text-muted">
+            Showing {filteredCrimes.length} of {crimes.length} crimes
+          </small>
+        </div>
+      </div>
+    );
+  };
+
+  // Render the crime map component
+  ReactDOM.render(<CrimeMap />, document.getElementById('map-filters'));
+</script>
+
+<style>
+  .map-filters {
+    padding: 15px;
+  }
+  
+  #crime-map {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .leaflet-popup-content {
+    font-size: 14px;
+  }
+  
+  .leaflet-popup-content h6 {
+    color: #dc3545;
+    margin-bottom: 10px;
+  }
+</style>
+</body>
+</html> 

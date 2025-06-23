@@ -1,12 +1,60 @@
-{% extends 'base.html' %}
-{% block title %}Upload Crime Report{% endblock %}
-{% block content %}
-<h2>Upload Crime Report (Excel)</h2>
-<form method="POST" enctype="multipart/form-data">
-  <div class="mb-3">
-    <label for="file" class="form-label">Excel File (.xlsx)</label>
-    <input type="file" class="form-control" id="file" name="file" accept=".xlsx" required>
-  </div>
-  <button type="submit" class="btn btn-success">Upload</button>
-</form>
-{% endblock %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Crime Report</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-dark custom-navbar">
+    <!-- Left side: Logo + Brand -->
+    <div class="navbar-left d-flex align-items-center gap-2">
+      <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Logo" class="logo" />
+      <span class="navbar-brand mb-0 h1">Crime Mapping</span>
+    </div>
+    <!-- Right side: Navigation Links -->
+    <div class="nav-links">
+      <a href="{{ url_for('main.dashboard') }}"><i class='bx bx-home'></i> Home</a>
+      <a href="{{ url_for('main.crime_map') }}"><i class='bx bx-map'></i> Crime Mapping</a>
+      <a href="#"><i class='bx bx-bar-chart'></i> Analytics</a>
+      <a href="{{ url_for('barangay.list_barangays') }}"><i class='bx bx-group'></i> Barangays</a>
+      <a href="{{ url_for('audit_logs.view_audit_logs') }}"><i class='bx bx-history'></i> Audit Logs</a>
+      <a href="{{ url_for('auth.create_user') }}"><i class='bx bx-user-plus'></i> Create User</a>
+      <a href="{{ url_for('auth.profile') }}"><i class='bx bx-user'></i> Profile</a>
+      <a href="{{ url_for('auth.logout') }}"><i class='bx bx-log-out'></i> Logout</a>
+      <span class="nav-spacer"></span>
+    </div>
+  </nav>
+
+<div class="container mt-4">
+    <h2>Upload Crime Report (Excel)</h2>
+    <form method="POST" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="file" class="form-label">Excel File (.xlsx)</label>
+        <input type="file" class="form-control" id="file" name="file" accept=".xlsx" required>
+      </div>
+      <button type="submit" class="btn btn-success">Upload</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const links = document.querySelectorAll('.nav-links a');
+      const currentPath = window.location.pathname;
+
+      links.forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        if (linkPath === currentPath) {
+          link.classList.add('active');
+        }
+      });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html> 

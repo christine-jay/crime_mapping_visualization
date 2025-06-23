@@ -6,6 +6,19 @@
     <title>Home</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <!-- React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Chart.js for React charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Axios for API calls -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-dark custom-navbar">
@@ -17,8 +30,8 @@
     <!-- Right side: Navigation Links -->
     <div class="nav-links">
       <a href="{{ url_for('main.dashboard') }}"><i class='bx bx-home'></i> Home</a>
-      <a href="#"><i class='bx bx-map'></i> Crime Mapping</a>
-      <a href="#"><i class='bx bx-bar-chart'></i> Analytics</a>
+      <a href="{{ url_for('main.crime_map') }}"><i class='bx bx-map'></i> Crime Mapping</a>
+      <a href="{{ url_for('main.analytics') }}"><i class='bx bx-bar-chart'></i> Analytics</a>
       <a href="{{ url_for('barangay.list_barangays') }}"><i class='bx bx-group'></i> Barangays</a>
       <a href="{{ url_for('audit_logs.view_audit_logs') }}"><i class='bx bx-history'></i> Audit Logs</a>
       <a href="{{ url_for('auth.create_user') }}"><i class='bx bx-user-plus'></i> Create User</a>
@@ -43,6 +56,7 @@
   </header>
 
   <main>
+    
     <section class="mandate-vision">
       <div class="mandate">
         <h4>MANDATE</h4>
@@ -110,5 +124,275 @@
   <footer>
     <p>&copy; 2025 City Police Station</p>
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const links = document.querySelectorAll('.nav-links a');
+      const currentPath = window.location.pathname;
+
+      links.forEach(link => {
+        const linkPath = new URL(link.href).pathname;
+        if (linkPath === currentPath) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+
+  <!-- React Components -->
+  <script type="text/babel">
+    // Dashboard Stats Component
+    const DashboardStats = () => {
+      const [stats, setStats] = React.useState({
+        totalCrimes: 0,
+        totalBarangays: 0,
+        thisMonth: 0,
+        lastMonth: 0
+      });
+      const [loading, setLoading] = React.useState(true);
+
+      React.useEffect(() => {
+        fetchStats();
+      }, []);
+
+      const fetchStats = async () => {
+        try {
+          const response = await axios.get('/api/dashboard/stats');
+          setStats(response.data);
+        } catch (error) {
+          console.error('Error fetching stats:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      if (loading) {
+        return <div className="stats-loading">Loading statistics...</div>;
+      }
+
+      return (
+        <div className="dashboard-stats">
+          <h3>Crime Statistics Overview</h3>
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-number">{stats.totalCrimes}</div>
+              <div className="stat-label">Total Crimes</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">{stats.totalBarangays}</div>
+              <div className="stat-label">Total Barangays</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">{stats.thisMonth}</div>
+              <div className="stat-label">This Month</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">{stats.lastMonth}</div>
+              <div className="stat-label">Last Month</div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // Crime Charts Component
+    const CrimeCharts = () => {
+      const [crimes, setCrimes] = React.useState([]);
+      const [loading, setLoading] = React.useState(true);
+
+      React.useEffect(() => {
+        fetchCrimes();
+      }, []);
+
+      const fetchCrimes = async () => {
+        try {
+          const response = await axios.get('/api/crimes');
+          setCrimes(response.data);
+        } catch (error) {
+          console.error('Error fetching crimes:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      React.useEffect(() => {
+        if (!loading && crimes.length > 0) {
+          createCharts();
+        }
+      }, [loading, crimes]);
+
+      const createCharts = () => {
+        // Crime Types Chart
+        const crimeTypesCtx = document.getElementById('crimeTypesChart');
+        if (crimeTypesCtx) {
+          const crimeTypes = {};
+          crimes.forEach(crime => {
+            crimeTypes[crime.type_of_crime] = (crimeTypes[crime.type_of_crime] || 0) + 1;
+          });
+
+          new Chart(crimeTypesCtx, {
+            type: 'doughnut',
+            data: {
+              labels: Object.keys(crimeTypes),
+              datasets: [{
+                data: Object.values(crimeTypes),
+                backgroundColor: [
+                  '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'
+                ]
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'Crime Types Distribution'
+                }
+              }
+            }
+          });
+        }
+
+        // Monthly Trend Chart
+        const monthlyTrendCtx = document.getElementById('monthlyTrendChart');
+        if (monthlyTrendCtx) {
+          const monthlyData = {};
+          crimes.forEach(crime => {
+            const month = new Date(crime.date_reported).toLocaleDateString('en-US', { month: 'short' });
+            monthlyData[month] = (monthlyData[month] || 0) + 1;
+          });
+
+          new Chart(monthlyTrendCtx, {
+            type: 'line',
+            data: {
+              labels: Object.keys(monthlyData),
+              datasets: [{
+                label: 'Crime Reports',
+                data: Object.values(monthlyData),
+                borderColor: '#36A2EB',
+                backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                tension: 0.1
+              }]
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: 'Monthly Crime Trends'
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        }
+      };
+
+      if (loading) {
+        return <div className="charts-loading">Loading charts...</div>;
+      }
+
+      return (
+        <div className="crime-charts">
+          <h3>Crime Analytics</h3>
+          <div className="charts-grid">
+            <div className="chart-container">
+              <canvas id="crimeTypesChart"></canvas>
+            </div>
+            <div className="chart-container">
+              <canvas id="monthlyTrendChart"></canvas>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    // Render components
+    ReactDOM.render(<DashboardStats />, document.getElementById('dashboard-stats'));
+    ReactDOM.render(<CrimeCharts />, document.getElementById('crime-charts'));
+  </script>
+
+  <style>
+    .dashboard-stats-section {
+      margin: 20px 0;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .dashboard-stats h3 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .stat-number {
+      font-size: 2.5em;
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      color: #666;
+      font-size: 1.1em;
+    }
+
+    .crime-charts-section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+    }
+
+    .crime-charts h3 {
+      color: #333;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 30px;
+    }
+
+    .chart-container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .stats-loading, .charts-loading {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 1.2em;
+    }
+  </style>
 </body>
 </html> 

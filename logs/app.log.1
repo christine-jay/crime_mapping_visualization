@@ -1,0 +1,106 @@
+2025-06-12 09:33:28,232 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:86]
+2025-06-12 09:33:28,238 INFO: OTP generation successful for user admin [in C:\crime_mapping_visualization 0\app\routes\auth.py:89]
+2025-06-12 09:33:33,310 INFO: OTP email sent to muyahooo1992@gmail.com [in C:\crime_mapping_visualization 0\app\routes\auth.py:99]
+2025-06-20 12:54:39,503 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-20 12:54:40,688 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-20 13:04:28,134 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-20 13:05:55,408 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-20 13:05:56,382 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-20 13:07:49,692 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-20 13:07:55,007 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 09:49:31,654 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 09:49:32,600 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 09:49:49,743 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:259]
+2025-06-23 09:49:49,743 INFO: Generated OTP: 600698, Expiry: 1750643689 [in C:\crime_mapping_visualization 0\app\routes\auth.py:262]
+2025-06-23 09:49:49,745 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:264]
+2025-06-23 09:49:49,748 INFO: Updating OTP for user_id: 2 [in C:\crime_mapping_visualization 0\app\routes\auth.py:268]
+2025-06-23 09:49:49,749 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('600698', 1750643689, 2) [in C:\crime_mapping_visualization 0\app\routes\auth.py:271]
+2025-06-23 09:49:49,758 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:274]
+2025-06-23 09:49:49,761 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:277]
+2025-06-23 09:49:49,761 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:281]
+2025-06-23 09:49:49,762 INFO: OTP generation successful for user admin [in C:\crime_mapping_visualization 0\app\routes\auth.py:284]
+2025-06-23 09:49:55,564 INFO: OTP email sent to muyahooo1992@gmail.com [in C:\crime_mapping_visualization 0\app\routes\auth.py:294]
+2025-06-23 10:21:39,837 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:22:01,975 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:24:10,087 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:25:20,043 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:25:20,849 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:25:38,979 ERROR: Database connection error: 1045 (28000): Access denied for user ''@'localhost' (using password: NO) [in C:\crime_mapping_visualization 0\app\routes\auth.py:27]
+2025-06-23 10:25:39,164 ERROR: Database error during login: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+Traceback (most recent call last):
+  File "C:\crime_mapping_visualization 0\app\routes\auth.py", line 239, in login
+    conn = get_db_connection()
+  File "C:\crime_mapping_visualization 0\app\routes\auth.py", line 20, in get_db_connection
+    return mysql.connector.connect(
+           ~~~~~~~~~~~~~~~~~~~~~~~^
+        host=Config.MYSQL_HOST,
+        ^^^^^^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+        database=Config.MYSQL_DB
+        ^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\pooling.py", line 323, in connect
+    return MySQLConnection(*args, **kwargs)
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection.py", line 173, in __init__
+    self.connect(**kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\abstracts.py", line 1363, in connect
+    self._open_connection()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection.py", line 359, in _open_connection
+    self._do_auth(
+    ~~~~~~~~~~~~~^
+        self._user,
+        ^^^^^^^^^^^
+    ...<5 lines>...
+        self._conn_attrs,
+        ^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\connection.py", line 292, in _do_auth
+    ok_pkt = self._authenticator.authenticate(
+        sock=self._socket,
+    ...<15 lines>...
+        fido_callback=self._fido_callback,
+    )
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\authentication.py", line 371, in authenticate
+    ok_pkt = self._handle_server_response(sock, pkt)
+  File "C:\Users\chris\AppData\Local\Programs\Python\Python313\Lib\site-packages\mysql\connector\authentication.py", line 285, in _handle_server_response
+    raise get_exception(pkt)
+mysql.connector.errors.ProgrammingError: 1045 (28000): Access denied for user ''@'localhost' (using password: NO)
+ [in C:\crime_mapping_visualization 0\app\routes\auth.py:334]
+2025-06-23 10:27:23,335 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:27:28,385 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:27:43,918 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:262]
+2025-06-23 10:27:43,919 INFO: Generated OTP: 508676, Expiry: 1750645963 [in C:\crime_mapping_visualization 0\app\routes\auth.py:265]
+2025-06-23 10:27:43,920 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:267]
+2025-06-23 10:27:43,922 INFO: Updating OTP for user_id: 2 [in C:\crime_mapping_visualization 0\app\routes\auth.py:271]
+2025-06-23 10:27:43,922 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('508676', 1750645963, 2) [in C:\crime_mapping_visualization 0\app\routes\auth.py:274]
+2025-06-23 10:27:43,935 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:277]
+2025-06-23 10:27:43,937 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:280]
+2025-06-23 10:27:43,938 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:284]
+2025-06-23 10:27:43,939 INFO: OTP generation successful for user admin [in C:\crime_mapping_visualization 0\app\routes\auth.py:287]
+2025-06-23 10:27:45,630 ERROR: Failed to send OTP email: please run connect() first [in C:\crime_mapping_visualization 0\app\routes\auth.py:299]
+2025-06-23 10:32:54,748 INFO: Application startup [in C:\crime_mapping_visualization 0\app\__init__.py:25]
+2025-06-23 10:33:35,435 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:262]
+2025-06-23 10:33:35,436 INFO: Generated OTP: 684135, Expiry: 1750646315 [in C:\crime_mapping_visualization 0\app\routes\auth.py:265]
+2025-06-23 10:33:35,436 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:267]
+2025-06-23 10:33:35,438 INFO: Updating OTP for user_id: 2 [in C:\crime_mapping_visualization 0\app\routes\auth.py:271]
+2025-06-23 10:33:35,439 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('684135', 1750646315, 2) [in C:\crime_mapping_visualization 0\app\routes\auth.py:274]
+2025-06-23 10:33:35,446 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:277]
+2025-06-23 10:33:35,449 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:280]
+2025-06-23 10:33:35,450 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:284]
+2025-06-23 10:33:35,453 INFO: OTP generation successful for user admin [in C:\crime_mapping_visualization 0\app\routes\auth.py:287]
+2025-06-23 10:33:40,527 INFO: OTP email sent to muyahooo1992@gmail.com [in C:\crime_mapping_visualization 0\app\routes\auth.py:297]
+2025-06-23 10:36:43,732 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:262]
+2025-06-23 10:36:43,733 INFO: Generated OTP: 745620, Expiry: 1750646503 [in C:\crime_mapping_visualization 0\app\routes\auth.py:265]
+2025-06-23 10:36:43,734 INFO: Attempting database connection for OTP storage [in C:\crime_mapping_visualization 0\app\routes\auth.py:267]
+2025-06-23 10:36:43,736 INFO: Updating OTP for user_id: 6 [in C:\crime_mapping_visualization 0\app\routes\auth.py:271]
+2025-06-23 10:36:43,737 INFO: Query: UPDATE user SET otp = %s, otp_expiry = %s WHERE user_id = %s, Values: ('745620', 1750646503, 6) [in C:\crime_mapping_visualization 0\app\routes\auth.py:274]
+2025-06-23 10:36:43,739 INFO: OTP update query executed [in C:\crime_mapping_visualization 0\app\routes\auth.py:277]
+2025-06-23 10:36:43,742 INFO: Database changes committed [in C:\crime_mapping_visualization 0\app\routes\auth.py:280]
+2025-06-23 10:36:43,743 INFO: Database connection closed [in C:\crime_mapping_visualization 0\app\routes\auth.py:284]
+2025-06-23 10:36:43,743 INFO: OTP generation successful for user im.nins [in C:\crime_mapping_visualization 0\app\routes\auth.py:287]
+2025-06-23 10:36:48,429 INFO: OTP email sent to im.ninsdejesus@gmail.com [in C:\crime_mapping_visualization 0\app\routes\auth.py:297]
+2025-06-23 10:42:53,437 INFO: Starting OTP generation process [in C:\crime_mapping_visualization 0\app\routes\auth.py:262]
